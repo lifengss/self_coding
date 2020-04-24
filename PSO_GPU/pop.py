@@ -34,5 +34,7 @@ class POP(object):
         '''
 
         if self._limit is not None:
-            sup_bound = 
+            sup_bound = np.max(self._limit)
+            inf_bound = np.min(self._limit)
+            
 
