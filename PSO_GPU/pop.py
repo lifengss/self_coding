@@ -7,22 +7,26 @@ from individual import Individual
 
 class POP(object):
     
-    def __init__(self,n_POP,limit=None, fitness_fun=None, cluster='', **kargs):
+    def __init__(self,n_POP,dim,limit=None, fitness_fun=None, cluster='', **kargs):
         '''
         Generate PSO population and their relative parameters.
         
         :n_POP: number of population, a scale.
+        :dim: problem dimension.
         :limit: constrain of population postion. An array in the shape of [2, dim]--direct range constrain of pop. TODO: extend to equation/unequation constrain.
         '''
+
+        assert isinstance(limit, type(np.asarray()))
         self.__n_POP = n_POP
+        self.__dim = dim
         self.__limit = limit
-        self.__cluster = cluster
+        self.__cluster = cluster    # str
         self.__iter = None
-        self.__fitness = None
-        self.__fitness_fun = fitness_fun # must be a graph
-        self.__POP, = None
-        self.__g_best = None
-        self.__POP_pos = None
+        self.__fitness = torch.tensor()
+        self.__fitness_fun = fitness_fun # must be a graph nn.modules
+        self.__POP, = dict()
+        self.__g_best = torch.tensor()
+        self.__POP_pos = torch.tensor()
 
     def initialize(self):
         '''
@@ -64,6 +68,15 @@ class POP(object):
     @property
     def POP(self,):
         return self.__POP
+    
+    def get_pos():
+        """
+        get positions of all individuals.
+
+        :return: a tensor in the shape of (n_POP, dim) to indicate all postions of population.
+        """
+        # TODO: to be finished
+        return
 
     @property
     def POP_pos(self,):
@@ -72,6 +85,13 @@ class POP(object):
 
     @POP_pos.setter
     def POP_pos(self,pos):
+        """
+        Set positions of POP.
+
+        :pos: a numpy array in the shape of (n_POP, dim)
+        """
+        assert isinstance(pos,type(np.asarray([]))), raise ValueError("pop must be a numpy array in the shape of (n_POP, dim).")
+        assert pos.shape == (self.__n_POP,self.__dim), raise ValueError("pop must be a numpy array in the shape of (n_POP, dim).")
         self.__POP_pos = pos
         self.__POP = self.set_pos()
     
