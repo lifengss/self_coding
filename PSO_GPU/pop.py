@@ -69,7 +69,7 @@ class POP(object):
     def POP(self,):
         return self.__POP
     
-    def get_pos():
+    def __get_pos():
         """
         get positions of all individuals.
 
@@ -80,7 +80,7 @@ class POP(object):
 
     @property
     def POP_pos(self,):
-        self.__POP_pos = self.get_pos()
+        self.__POP_pos = self.__get_pos()
         return self.__POP_pos
 
     @POP_pos.setter
